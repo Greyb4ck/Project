@@ -58,3 +58,5 @@ def run():
     window = MainWindow()
     window.show()
     app.exec_()
+   
+run()
