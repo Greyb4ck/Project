@@ -6,19 +6,21 @@ import module1 as m1
 import sys
 
 class MainWindow(QMainWindow):
-    
+        
         def __init__(self):
             super(MainWindow, self).__init__()
             self.setGeometry(50, 50 , 500 , 300)
             self.setWindowTitle("MY Awsome App")
             self.UI()
+            self.option = 0
 
-        def plot_act(self , option):
+        def plot_act(self) :
+
             self.comboText = self.combo.currentText()
             self.comboText2 = self.combo2.currentText()
-            if option == True:
+            if self.option == 1:
                 m1.plot2_per(self.comboText, self.comboText2)    
-            if option == False:
+            if self.option == 0:
                 m1.plot2(self.comboText, self.comboText2)
 
         def UI(self):
@@ -41,14 +43,14 @@ class MainWindow(QMainWindow):
 
             self.button = QPushButton("Plot",self)
             self.button.move(150,130)
-            self.button.clicked.connect(self.plot_act)
+            self.button.clicked.connect(self.plot_act(self.option))
             self.show()
 
         def Pick_plot(self, state):
             if state == Qt.Checked:
-                self.option = True
+                self.option = 1
             else:
-                self.option = False     
+                self.option = 0     
                
 
         def list_craft(self):
