@@ -1,0 +1,36 @@
+import pandas as pd
+from matplotlib import pyplot as plt
+import sys
+
+
+def plot2(stringA , stirngB):
+    data = pd.read_csv('countries.csv')
+    cuntry_nameA = stringA
+    cuntry_nameB = stirngB
+    cuntry1 = data[data.country == cuntry_nameA]
+    cuntry2 = data[data.country == cuntry_nameB]
+    plt.plot(cuntry1.year, cuntry1.population / 10 ** 6)
+    plt.plot(cuntry2.year, cuntry2.population / 10 ** 6)
+    plt.legend([cuntry_nameA, cuntry_nameB])
+    plt.title('Population change')
+    plt.xlabel('years')
+    plt.ylabel('Number of people in mln')
+    plt.show()
+
+
+def plot2_per(stringA , stirngB):
+    data = pd.read_csv('countries.csv')
+    cuntry_nameB = stringA
+    cuntry_nameA = stirngB
+    cuntry1 = data[data.country == cuntry_nameA]
+    cuntry2 = data[data.country == cuntry_nameB]
+    cuntry1_growth = cuntry1.population / cuntry1.population.iloc[0] * 100
+    cuntry2_growth = cuntry2.population / cuntry2.population.iloc[0] * 100
+    plt.plot(cuntry1.year, cuntry1_growth)
+    plt.plot(cuntry2.year, cuntry2_growth )
+    plt.legend([cuntry_nameA, cuntry_nameB])
+    plt.title('Population growth change')
+    plt.xlabel('years')
+    plt.ylabel('Population growth change')
+    plt.show()
+    
