@@ -1,0 +1,60 @@
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
+import pandas as pd
+from matplotlib import pyplot as plt
+import module1 as m1
+import sys
+
+class MainWindow(QMainWindow):
+    
+        def __init__(self):
+            super(MainWindow, self).__init__()
+            self.setGeometry(50, 50 , 500 , 300)
+            self.setWindowTitle("MY Awsome App")
+
+            self.UI()
+
+        def UI(self):
+            self.combo = QComboBox(self)
+            self.combo.move(150 , 100)
+            names = self.list_craft();
+            for i in names:
+                self.combo.addItem(i)
+
+            self.combo2 = QComboBox(self)
+            self.combo2.move(150 , 160)
+            names = self.list_craft();
+            for i in names:
+                self.combo2.addItem(i)
+
+            self.comboText = self.combo.currentText()
+            self.comboText2 = self.combo2.currentText()
+
+            self.button = QPushButton("Plot",self)
+            self.button.move(150,130)
+            self.comboText = self.combo.currentText()
+            self.comboText2 = self.combo2.currentText()
+            self.button.clicked.connect(m1.plot2_per(self.comboText, self.comboText2))
+
+            self.show()
+
+        def list_craft(self):
+            list1 = []
+
+            file = open("countries.csv", "r")
+            countries = set()
+            for line in file:
+                country = line[:line.find(',')]
+                if country not in countries:
+                    list1 += [country]
+                countries.add(country)
+            file.close()
+            return list1
+
+
+def run():
+
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    app.exec_()
