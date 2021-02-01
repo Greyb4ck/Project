@@ -11,8 +11,15 @@ class MainWindow(QMainWindow):
             super(MainWindow, self).__init__()
             self.setGeometry(50, 50 , 500 , 300)
             self.setWindowTitle("MY Awsome App")
-
             self.UI()
+
+        def plot_act(self , option):
+            self.comboText = self.combo.currentText()
+            self.comboText2 = self.combo2.currentText()
+            if option == True:
+                m1.plot2_per(self.comboText, self.comboText2)    
+            if option == False:
+                m1.plot2(self.comboText, self.comboText2)
 
         def UI(self):
             self.combo = QComboBox(self)
@@ -27,16 +34,22 @@ class MainWindow(QMainWindow):
             for i in names:
                 self.combo2.addItem(i)
 
-            self.comboText = self.combo.currentText()
-            self.comboText2 = self.combo2.currentText()
+            
+            self.check = QCheckBox('Growth factor',self)
+            self.check.move(300,160)
+            self.check.stateChanged.connect(self.Pick_plot)
 
             self.button = QPushButton("Plot",self)
             self.button.move(150,130)
-            self.comboText = self.combo.currentText()
-            self.comboText2 = self.combo2.currentText()
-            self.button.clicked.connect(m1.plot2_per(self.comboText, self.comboText2))
-
+            self.button.clicked.connect(self.plot_act)
             self.show()
+
+        def Pick_plot(self, state):
+            if state == Qt.Checked:
+                self.option = True
+            else:
+                self.option = False     
+               
 
         def list_craft(self):
             list1 = []
@@ -58,5 +71,5 @@ def run():
     window = MainWindow()
     window.show()
     app.exec_()
-   
+
 run()
